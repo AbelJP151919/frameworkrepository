@@ -2,10 +2,21 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+interface Movie {
+  id: number;
+  title: string;
+  poster_url?: string;
+  director?: string;
+  year?: number;
+  genre?: string;
+  description?: string;
+  rating?: number;
+}
+
 const Movies = () => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchMovies = async () => {

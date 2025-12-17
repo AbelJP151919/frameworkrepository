@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChangeEvent as ReactChangeEvent } from 'react';
 import axios from 'axios';
+
+interface FormData {
+  title: string;
+  director: string;
+  year: string;
+  genre: string;
+  rating: string;
+  poster_url: string;
+  description: string;
+}
 
 const AddMovie = () => {
   const [formData, setFormData] = useState({
@@ -13,10 +24,10 @@ const AddMovie = () => {
     description: ''
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e: ReactChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -24,7 +35,7 @@ const AddMovie = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -122,7 +133,7 @@ const AddMovie = () => {
               className="form-control"
               id="description"
               name="description"
-              rows="4"
+              rows={4}
               value={formData.description}
               onChange={handleChange}
             />

@@ -1,7 +1,15 @@
 import { useState } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
+
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     subject: '',
@@ -9,7 +17,7 @@ const Contact = () => {
   });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -17,7 +25,7 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // For now, just show success message since backend doesn't handle contact form
     setSubmitted(true);
@@ -89,7 +97,7 @@ const Contact = () => {
                     className="form-control"
                     id="message"
                     name="message"
-                    rows="5"
+                    rows={5}
                     value={formData.message}
                     onChange={handleChange}
                     required
