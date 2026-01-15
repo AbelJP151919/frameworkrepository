@@ -1,5 +1,5 @@
 import React from 'react';
-import MovieList from '../components/MovieList.jsx';
+import MovieList from '../components/MovieList.js';
 import mockMovies from '../data/mockMovies.js';
 import './HomePage.css';
 
