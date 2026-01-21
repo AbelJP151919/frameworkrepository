@@ -1,10 +1,7 @@
-import { useState } from 'react'
 import './HomePage.css'
 import { Link } from 'react-router-dom'
 
 function HomePage() {
-
-    const [count, setCount] = useState(0)
     
     return (
         <>
