@@ -1,10 +1,10 @@
 import AboutPage from './pages/AboutPage.jsx';
-import ContactPage from './pages/ContactPage.jsx';
-import MovieDetailPage from './pages/MovieDetailPage.jsx';
+import ContactPage from './pages/ContactPage.js';
+import MovieDetailPage from './pages/MovieDetailPage.js';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import HomePage from './pages/HomePage.jsx'
 import MoviesPage from './pages/MoviesPage.jsx'
-import NotFoundPage from './pages/NotFoundPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.js';
 import Layout from './components/Layout.jsx';
 import './App.css'
 

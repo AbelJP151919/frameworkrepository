@@ -2,11 +2,11 @@ import './HomePage.css';
 
 function AboutPage() {
 	return (
-		<div class="row justify-content-center">
-			<div class="col-md-8">
+		<div className="row justify-content-center">
+			<div className="col-md-8">
 				<h1>Sobre CineFlask</h1>
-				<div class="card">
-					<div class="card-body">
+				<div className="card">
+					<div className="card-body">
 						<h3>¿Qué es CineFlask?</h3>
 						<p>CineFlask es una aplicación web desarrollada con Flask como parte del módulo de Frameworks para la Web en DAW2.</p>
 						<h5>Tecnologías Utilizadas</h5>

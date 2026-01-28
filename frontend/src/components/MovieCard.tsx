@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Movie } from '../models/movies';
 import './MovieCard.css';
 
-function MovieCard({ movie }) {
+function MovieCard({ movie }: { movie: Movie }) {
   return (
     <Link to={`/movie/${movie.id}`} className="movie-card">
       <div className="movie-card-image-container">
