@@ -11,10 +11,11 @@ app.secret_key = os.environ.get('FLASK_SECRET', 'dev-secret')
 ALLOWED_ORIGINS = os.environ.get('FLASK_CORS_ORIGINS', 'http://localhost:5173,http://localhost:3000').split(',')
 CORS(app, resources={
     r"/api/*": {
-        "origins": ALLOWED_ORIGINS,
+        "origins": "*",  # Permite TODOS los orígenes
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        "allow_headers": ["Content-Type"],
-        "supports_credentials": True
+        "allow_headers": ["Content-Type", "Authorization"],
+        "supports_credentials": True,
+        "expose_headers": ["Content-Type"]
     }
 })
 

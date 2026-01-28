@@ -1,6 +1,7 @@
 // src/data/mockMovies.js
+import { Movie } from '../models/movies';
 
-export const mockMovies = [
+export const mockMovies: Movie[] = [
   {
     id: 1,
     title: "The Shawshank Redemption",
