@@ -1,0 +1,123 @@
+@startuml Component_Hierarchy_Flat
+!theme plain
+hide empty members
+skinparam componentStyle uml2
+
+' --- Componentes Principales ---
+component [main.tsx] as Main
+component [App.tsx] as App
+component [Layout] as Layout
+component [Header] as Header
+component [Footer] as Footer
+
+' --- Páginas ---
+component [HomePage] as Home
+component [MoviesPage] as MoviesPage
+component [MovieDetailPage] as DetailPage
+component [AboutPage] as About
+
+' --- Componentes UI ---
+component [SearchBar] as SearchBar
+component [FilterBar] as FilterBar
+component [MovieList] as MovieList
+component [MovieCard] as MovieCard
+
+' --- ViewModels (Hooks) ---
+component [useMoviesViewModel] as VM1 <<Hook>>
+component [useMovieDetailViewModel] as VM2 <<Hook>>
+
+' --- Relaciones (Jerarquía) ---
+Main --> App
+App --> Layout : wraps
+
+' Estructura del Layout
+Layout --> Header
+Layout --> Home : route /
+Layout --> MoviesPage : route /movies
+Layout --> DetailPage : route /movies/:id
+Layout --> About : route /about
+Layout --> Footer
+
+' Estructura interna de MoviesPage
+MoviesPage --> SearchBar
+MoviesPage --> FilterBar
+MoviesPage --> MovieList
+MovieList --> MovieCard : repeats
+
+' Consumo de Hooks (Lógica)
+MoviesPage ..> VM1 : consumes
+DetailPage ..> VM2 : consumes
+
+@enduml
+
+
+@startuml Architecture_MVVM_Flat
+!theme plain
+hide empty members
+skinparam classAttributeIconSize 0
+
+' --- MODELO ---
+interface Movie {
+    + id: number
+    + title: string
+    + poster_url: string
+    + rating: number
+    + year: number
+    + genre: string
+    + description: string
+}
+
+' --- REPOSITORIO / SERVICIOS ---
+interface "IMovieRepository" as IMovieRepo {
+    + getMovies(): Promise<Movie[]>
+    + getMovieById(id: number): Promise<Movie>
+    + createMovie(data: object): Promise<object>
+}
+
+class "ApiService" as ApiService {
+    - API_BASE_URL: string
+    - request(endpoint, options): Promise<T>
+    + getMovies(): Promise<Movie[]>
+    + getMovieById(id: number): Promise<Movie>
+    + createMovie(data: object): Promise<object>
+}
+
+' --- VIEW MODELS (Lógica) ---
+class "useMoviesViewModel" as ListVM {
+    + movies: Movie[]
+    + filteredMovies: Movie[]
+    + loading: boolean
+    + error: string
+    + searchTerm: string
+    + favoritesCount: number
+    -- Actions --
+    + setSearchTerm(term: string)
+    + toggleFavorite(id: number)
+    + refresh()
+}
+
+class "useMovieDetailViewModel" as DetailVM {
+    + movie: Movie | null
+    + loading: boolean
+    + error: string
+    + isFavorite: boolean
+    -- Actions --
+    + toggleFavorite()
+    + goBack()
+    + refresh()
+}
+
+' --- RELACIONES ---
+' Implementación del repositorio
+ApiService ..|> IMovieRepo : implements
+ApiService .up.> Movie : returns
+
+' Uso del repositorio por los ViewModels
+ListVM ..> IMovieRepo : uses
+DetailVM ..> IMovieRepo : uses
+
+' Gestión del modelo
+ListVM "1" *-- "many" Movie : manages
+DetailVM "1" *-- "0..1" Movie : manages
+
+@enduml
