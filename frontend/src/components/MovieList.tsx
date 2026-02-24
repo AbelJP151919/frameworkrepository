@@ -3,18 +3,32 @@ import MovieCard from './MovieCard.tsx';
 import { Movie } from '../models/movies';
 import './MovieList.css';
 
-function MovieList({ movies }: { movies: Movie[] }) {
+interface MovieListProps {
+  movies: Movie[];
+  onToggleFavorite: (movieId: number) => void;
+  isFavorite: (movieId: number) => boolean;
+}
+
+function MovieList({ movies, onToggleFavorite, isFavorite }: MovieListProps) {
   if (!movies || movies.length === 0) {
-    return <div className="movie-list-empty">No hay películas para mostrar.</div>;
+    return (
+      <div className="movie-list-empty">
+        <p>No hay películas para mostrar.</p>
+        <p>Intenta ajustar tus filtros de búsqueda.</p>
+      </div>
+    );
   }
 
   return (
     <div className="movie-list">
-      <div className="movie-list-title">Películas</div>
-      <div className="movie-list-count">Total: {movies.length}</div>
       <div className="movie-grid">
         {movies.map((movie: Movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          <MovieCard 
+            key={movie.id} 
+            movie={movie} 
+            isFavorite={isFavorite(movie.id)}
+            onToggleFavorite={() => onToggleFavorite(movie.id)}
+          />
         ))}
       </div>
     </div>

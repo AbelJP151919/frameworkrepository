@@ -5,6 +5,17 @@ import { Movie } from '../models/movies';
  * Centraliza todas las comunicaciones HTTP con el backend Flask
  */
 
+// --- GESTIÓN DE CREDENCIALES (Requisito Práctica) ---
+const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+// Verificación de seguridad en consola al iniciar
+if (!TMDB_API_KEY) {
+  console.error('[Config] ❌ ALERTA: No se ha encontrado VITE_TMDB_API_KEY en .env.local');
+} else {
+  // Mostramos solo los últimos 4 caracteres por seguridad
+  console.log(`[Config] ✅ API Key de TMDB detectada: ******${TMDB_API_KEY.slice(-4)}`);
+}
+
 // Configuración de Base URL desde variables de entorno
 const API_BASE_URL = 'http://127.0.0.1:5000';
 
