@@ -63,3 +63,19 @@ Esta fase se centró en la formalización de la documentación arquitectónica d
 - **Políticas del Repositorio:** Modificado el archivo `.gitignore` para bloquear estrictamente la subida de archivos `.env.local` al control de versiones, previniendo vulnerabilidades de seguridad y filtración de claves API. Se mantiene `.env.example` como plantilla pública.
 
 ---
+## [Unreleased] - PR 5: Integración con API de TMDB y Persistencia Local
+
+Conexión de la aplicación con el servicio externo The Movie Database (TMDB) utilizando una arquitectura de Frontend Directo y Backend de Persistencia.
+
+### Añadido
+- **Servicio Externo (TMDB):** Nuevo módulo `tmdbService.ts` para gestionar la autenticación y las peticiones a la API externa, incluyendo el mapeo y transformación de los datos JSON al modelo local `Movie`.
+- **Buscador Interactivo (UI):** Creación de la página `SearchTMDBPage.tsx` con un formulario de búsqueda en tiempo real, reutilizando el componente `MovieCard` para renderizar resultados externos.
+- **Importación de Catálogo:** Funcionalidad para guardar películas directamente desde TMDB a la base de datos SQLite local a través de peticiones asíncronas al endpoint `POST /api/movies`.
+- **Gestión de Borrado (Extra):** Implementación del endpoint `DELETE /api/movies/<id>` en el backend (Flask) para permitir la limpieza y gestión avanzada del catálogo de películas local.
+- **Configuración TypeScript:** Creación del archivo `tsconfig.json` maestro para centralizar las reglas de compilación, habilitar la resolución de módulos (bundler) y dar soporte nativo a los tipos de Vite (`import.meta.env`).
+
+### Cambiado
+- **Enrutamiento y Navegación:** Actualización de `App.tsx` para registrar la nueva ruta `/search` e inclusión del nuevo enlace visual (con icono) en el menú de navegación (`Header.tsx`).
+- **Estandarización de Módulos:** Refactorización de las importaciones en `App.tsx`, eliminando las extensiones explícitas (`.jsx`, `.tsx`) para adherirse a las mejores prácticas del empaquetado moderno con React y TypeScript.
+
+---

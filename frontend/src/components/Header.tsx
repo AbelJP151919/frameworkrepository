@@ -36,6 +36,11 @@ function Header() {
                                     <i className="fas fa-envelope me-1"></i>Contacto
                                 </Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/search">
+                                    <i className="fas fa-search me-1"></i>Buscar TMDB
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>
