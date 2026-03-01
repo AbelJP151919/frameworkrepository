@@ -170,7 +170,6 @@ def create_movie():
         description = data.get('description')
         poster_url = data.get('poster_url')
 
-        # Validaciones de tipos
         try:
             year_val = int(year) if year else None
         except (ValueError, TypeError):
@@ -199,6 +198,31 @@ def create_movie():
     except Exception as e:
         return jsonify({'error': str(e), 'status': 'error'}), 500
 
+@app.route('/api/movies/<int:movie_id>', methods=['DELETE'])
+def delete_movie(movie_id):
+    """Elimina una película por ID (Extra Opcional)"""
+    try:
+        conn = get_db_connection()
+        # Verificar si existe primero
+        cur = conn.execute('SELECT id FROM movies WHERE id = ?', (movie_id,))
+        if not cur.fetchone():
+            conn.close()
+            return jsonify({
+                'error': 'Película no encontrada',
+                'status': 'error'
+            }), 404
+
+        with conn:
+            conn.execute('DELETE FROM movies WHERE id = ?', (movie_id,))
+        conn.close()
+
+        return jsonify({
+            'message': 'Película eliminada correctamente',
+            'status': 'success'
+        }), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'status': 'error'}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
